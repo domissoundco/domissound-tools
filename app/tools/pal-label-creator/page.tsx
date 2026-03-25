@@ -104,10 +104,12 @@ export default function PalLabelCreatorPage() {
   const [bandScale, setBandScale] = useState(100);
   const [bandX, setBandX] = useState(50);
   const [bandY, setBandY] = useState(45);
+  const [isDraggingBand, setIsDraggingBand] = useState(false);
 
   const [companyScale, setCompanyScale] = useState(100);
   const [companyX, setCompanyX] = useState(14);
   const [companyY, setCompanyY] = useState(10);
+  const [isDraggingCompany, setIsDraggingCompany] = useState(false);
 
   const svgRef = useRef<SVGSVGElement | null>(null);
 
@@ -242,18 +244,18 @@ export default function PalLabelCreatorPage() {
     contentBottom - bandBoxHeight - 10
   );
 
-  const companyBoxWidth = widthPx * 0.18 * (companyScale / 100);
-  const companyBoxHeight = topHeight * 0.65 * (companyScale / 100);
+    const companyBoxWidth = widthPx * 0.35 * (companyScale / 100);
+    const companyBoxHeight = topHeight * 0.9 * (companyScale / 100);
   const companyBoxX = clamp(
     (companyX / 100) * widthPx - companyBoxWidth / 2,
     safeInset,
     widthPx - safeInset - companyBoxWidth
   );
-  const companyBoxY = clamp(
+    const companyBoxY = clamp(
     (companyY / 100) * heightPx - companyBoxHeight / 2,
     8,
-    topHeight - companyBoxHeight - 8
-  );
+    heightPx - companyBoxHeight - 8
+    );
 
   return (
     <div
@@ -587,6 +589,29 @@ export default function PalLabelCreatorPage() {
               height={heightPx}
               viewBox={`0 0 ${widthPx} ${heightPx}`}
               style={{ maxWidth: "100%", maxHeight: "75vh", boxShadow: "0 12px 30px rgba(0,0,0,0.18)" }}
+              onMouseMove={(e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width) * 100;
+  const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+  if (isDraggingBand) {
+    setBandX(x);
+    setBandY(y);
+  }
+
+  if (isDraggingCompany) {
+    setCompanyX(x);
+    setCompanyY(y);
+  }
+}}
+onMouseUp={() => {
+  setIsDraggingBand(false);
+  setIsDraggingCompany(false);
+}}
+onMouseLeave={() => {
+  setIsDraggingBand(false);
+  setIsDraggingCompany(false);
+}}
             >
               <rect width={widthPx} height={heightPx} fill={middleColor} />
               <rect x="0" y="0" width={widthPx} height={topHeight} fill={topColor} />
@@ -614,6 +639,8 @@ export default function PalLabelCreatorPage() {
                   width={companyBoxWidth}
                   height={companyBoxHeight}
                   preserveAspectRatio="xMidYMid meet"
+                  onMouseDown={() => setIsDraggingCompany(true)}
+                  style={{ cursor: "grab" }}  
                 />
               ) : (
                 <text
@@ -635,6 +662,8 @@ export default function PalLabelCreatorPage() {
                   width={bandBoxWidth}
                   height={bandBoxHeight}
                   preserveAspectRatio="xMidYMid meet"
+                  onMouseDown={() => setIsDraggingBand(true)}
+                  style={{ cursor: "grab" }}
                 />
               ) : (
                 <>
