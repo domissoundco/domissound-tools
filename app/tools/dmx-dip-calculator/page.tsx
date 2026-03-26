@@ -302,32 +302,7 @@ export default function DmxDipCalculatorPage() {
             >
               DIP Switch Bank
             </div>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-start",
-                marginBottom: 12,
-              }}
-            >
-              <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 8,
-                  padding: "8px 14px",
-                  borderRadius: 999,
-                  background: "#22c55e",
-                  color: "#04130a",
-                  fontWeight: 900,
-                  fontSize: 14,
-                }}
-              >
-                <span>←</span>
-                <span>ON</span>
-              </div>
-            </div>
-
+            
             <div style={{ overflowX: "auto", paddingBottom: 4 }}>
               <div
                 style={{
