@@ -12,7 +12,7 @@ function addressToDipStates(address: number) {
   let remaining = clamp(Math.floor(address), 1, 511);
   const states = new Array(9).fill(false);
 
-  for (let i = SWITCH_VALUES.length - 1; i >= 0; i--) {
+  for (let i = SWITCH_VALUES.length - 1; i >= 0; i -= 1) {
     const value = SWITCH_VALUES[i];
     if (remaining >= value) {
       states[i] = true;
@@ -35,6 +35,7 @@ export default function DmxDipCalculatorPage() {
   const [dipStates, setDipStates] = useState<boolean[]>(() =>
     addressToDipStates(1)
   );
+  const [showLocateScreen, setShowLocateScreen] = useState(false);
 
   const parsed = Number(inputValue);
   const isInvalid = Number.isNaN(parsed) || parsed < 1 || parsed > 511;
@@ -50,10 +51,6 @@ export default function DmxDipCalculatorPage() {
     return SWITCH_VALUES.map((_, i) => (dipStates[i] ? i + 1 : null))
       .filter((v) => v !== null)
       .join(", ");
-  }, [dipStates]);
-
-  const reverseAddress = useMemo(() => {
-    return dipStatesToAddress(dipStates);
   }, [dipStates]);
 
   function handleAddressChange(value: string) {
@@ -79,6 +76,14 @@ export default function DmxDipCalculatorPage() {
     setDipStates(addressToDipStates(1));
   }
 
+  function openLocateScreen() {
+    setShowLocateScreen(true);
+  }
+
+  function closeLocateScreen() {
+    setShowLocateScreen(false);
+  }
+
   const panelStyle: React.CSSProperties = {
     background: "rgba(255,255,255,0.06)",
     border: "1px solid rgba(255,255,255,0.10)",
@@ -88,104 +93,76 @@ export default function DmxDipCalculatorPage() {
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background:
-          "radial-gradient(circle at top left, rgba(34,197,94,0.12), transparent 28%), linear-gradient(180deg, #06101f 0%, #0b1220 48%, #0f172a 100%)",
-        color: "#ffffff",
-        fontFamily: "Arial, Helvetica, sans-serif",
-        padding: 16,
-      }}
-    >
-      <div style={{ maxWidth: 1180, margin: "0 auto", display: "grid", gap: 20 }}>
+    <>
+      <div
+        style={{
+          minHeight: "100vh",
+          background:
+            "radial-gradient(circle at top left, rgba(34,197,94,0.12), transparent 28%), linear-gradient(180deg, #06101f 0%, #0b1220 48%, #0f172a 100%)",
+          color: "#ffffff",
+          fontFamily: "Arial, Helvetica, sans-serif",
+          padding: 16,
+        }}
+      >
         <div
           style={{
-            ...panelStyle,
-            padding: "24px 24px 26px",
-            overflow: "hidden",
-            position: "relative",
+            maxWidth: 980,
+            margin: "0 auto",
+            display: "grid",
+            gap: 18,
           }}
         >
-          <div
-            style={{
-              position: "absolute",
-              top: -40,
-              right: -40,
-              width: 180,
-              height: 180,
-              borderRadius: "50%",
-              background: "radial-gradient(circle, rgba(34,197,94,0.18), transparent 70%)",
-              pointerEvents: "none",
-            }}
-          />
-
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 10,
-              padding: "8px 14px",
-              borderRadius: 999,
-              background: "rgba(255,255,255,0.08)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              fontSize: 12,
-              fontWeight: 800,
-              letterSpacing: 0.8,
-              textTransform: "uppercase",
-              marginBottom: 16,
-            }}
-          >
-            <span
+          <div style={{ display: "grid", gap: 14 }}>
+            <a
+              href="/"
               style={{
-                width: 8,
-                height: 8,
-                borderRadius: "50%",
-                background: "#22c55e",
-                boxShadow: "0 0 12px rgba(34,197,94,0.8)",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "8px 14px",
+                borderRadius: 999,
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                fontSize: 12,
+                fontWeight: 800,
+                letterSpacing: 0.8,
+                textTransform: "uppercase",
+                color: "#ffffff",
+                textDecoration: "none",
+                width: "fit-content",
               }}
-            />
-            DOMISSOUNDCO Tools
-          </div>
+            >
+              <span
+                style={{
+                  width: 8,
+                  height: 8,
+                  borderRadius: "50%",
+                  background: "#22c55e",
+                  boxShadow: "0 0 12px rgba(34,197,94,0.8)",
+                }}
+              />
+              TOOLS.DOMISSOUND.CO
+            </a>
 
-          <div style={{ display: "grid", gap: 12 }}>
             <h1
               style={{
                 margin: 0,
-                fontSize: "clamp(34px, 6vw, 64px)",
+                fontSize: "clamp(34px, 7vw, 58px)",
                 lineHeight: 0.95,
-                letterSpacing: -1.6,
-                maxWidth: 760,
+                letterSpacing: -1.4,
+                fontWeight: 900,
               }}
             >
-              DMX DIP
-              <br />
-              Calculator
+              DMX DIP Calc
             </h1>
-
-            <p
-              style={{
-                margin: 0,
-                maxWidth: 760,
-                color: "rgba(255,255,255,0.74)",
-                fontSize: 17,
-                lineHeight: 1.6,
-              }}
-            >
-              Fast on-site addressing for fixtures with physical DIP switches.
-              Enter an address or tap the switch bank and calculate it backwards instantly.
-            </p>
           </div>
-        </div>
 
-        <div
-          style={{
-            display: "grid",
-            gap: 20,
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          }}
-        >
-          <div style={{ ...panelStyle, padding: 20 }}>
+          <div
+            style={{
+              ...panelStyle,
+              padding: 18,
+            }}
+          >
             <div
               style={{
                 fontSize: 12,
@@ -193,7 +170,7 @@ export default function DmxDipCalculatorPage() {
                 textTransform: "uppercase",
                 letterSpacing: 0.8,
                 color: "rgba(255,255,255,0.68)",
-                marginBottom: 10,
+                marginBottom: 8,
               }}
             >
               DMX Address
@@ -207,10 +184,10 @@ export default function DmxDipCalculatorPage() {
               onChange={(e) => handleAddressChange(e.target.value)}
               style={{
                 width: "100%",
-                fontSize: 52,
+                fontSize: "clamp(30px, 7vw, 42px)",
                 fontWeight: 900,
-                padding: "18px 18px",
-                borderRadius: 22,
+                padding: "12px 14px",
+                borderRadius: 18,
                 border: isInvalid
                   ? "2px solid #ef4444"
                   : "2px solid rgba(255,255,255,0.10)",
@@ -240,7 +217,7 @@ export default function DmxDipCalculatorPage() {
                 display: "flex",
                 gap: 10,
                 flexWrap: "wrap",
-                marginTop: 16,
+                marginTop: 14,
               }}
             >
               <button
@@ -253,185 +230,36 @@ export default function DmxDipCalculatorPage() {
                   border: "none",
                   fontWeight: 800,
                   cursor: "pointer",
+                  fontSize: 14,
                 }}
               >
                 Reset
               </button>
 
-              <div
+              <button
+                onClick={openLocateScreen}
                 style={{
                   padding: "12px 16px",
                   borderRadius: 999,
                   background: "rgba(255,255,255,0.08)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  color: "rgba(255,255,255,0.82)",
-                  fontWeight: 700,
+                  color: "#ffffff",
+                  border: "1px solid rgba(255,255,255,0.10)",
+                  fontWeight: 800,
+                  cursor: "pointer",
+                  fontSize: 14,
                 }}
               >
-                Range: 1–511
-              </div>
+                Locate Screen
+              </button>
             </div>
           </div>
 
-          <div style={{ ...panelStyle, padding: 20, overflow: "hidden" }}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 12,
-                flexWrap: "wrap",
-                marginBottom: 16,
-              }}
-            >
-              <h2
-                style={{
-                  margin: 0,
-                  fontSize: 24,
-                  letterSpacing: -0.4,
-                }}
-              >
-                DIP Switch Bank
-              </h2>
-            </div>
-
-            <div style={{ overflowX: "auto", paddingBottom: 6 }}>
-              <div
-                style={{
-                  minWidth: 700,
-                  background: "#050505",
-                  borderRadius: 24,
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  padding: "18px 14px 14px",
-                  boxShadow: "inset 0 2px 0 rgba(255,255,255,0.03)",
-                }}
-              >
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(9, minmax(72px, 1fr))",
-                    gap: 10,
-                  }}
-                >
-                  {SWITCH_VALUES.map((value, index) => {
-                    const isOn = dipStates[index];
-
-                    return (
-                      <button
-                        key={value}
-                        onClick={() => toggleSwitch(index)}
-                        style={{
-                          background: "transparent",
-                          border: "none",
-                          cursor: "pointer",
-                          padding: 0,
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "grid",
-                            gap: 8,
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              height: 154,
-                              background: "#101010",
-                              borderRadius: 14,
-                              position: "relative",
-                              border: "1px solid rgba(255,255,255,0.07)",
-                              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.03)",
-                            }}
-                          >
-                            <div
-                              style={{
-                                position: "absolute",
-                                inset: 10,
-                                borderRadius: 12,
-                                background: "#111827",
-                                border: "1px solid rgba(255,255,255,0.06)",
-                              }}
-                            />
-
-                            <div
-                              style={{
-                                position: "absolute",
-                                top: 12,
-                                left: 0,
-                                right: 0,
-                                textAlign: "center",
-                                fontSize: 11,
-                                fontWeight: 800,
-                                letterSpacing: 0.5,
-                                color: isOn ? "#86efac" : "rgba(255,255,255,0.24)",
-                              }}
-                            >
-                              ON
-                            </div>
-
-                            <div
-                              style={{
-                                position: "absolute",
-                                top: isOn ? 18 : 86,
-                                left: "50%",
-                                transform: "translateX(-50%)",
-                                width: "72%",
-                                height: 50,
-                                borderRadius: 10,
-                                background: "#f3f4f6",
-                                border: "1px solid #d1d5db",
-                                boxShadow:
-                                  "0 10px 20px rgba(0,0,0,0.3), inset 0 -2px 5px rgba(0,0,0,0.14)",
-                                transition: "top 0.15s ease",
-                              }}
-                            />
-
-                            <div
-                              style={{
-                                position: "absolute",
-                                bottom: 12,
-                                left: 0,
-                                right: 0,
-                                textAlign: "center",
-                                fontSize: 11,
-                                fontWeight: 800,
-                                letterSpacing: 0.5,
-                                color: !isOn ? "#ffffff" : "rgba(255,255,255,0.24)",
-                              }}
-                            >
-                              OFF
-                            </div>
-                          </div>
-
-                          <div
-                            style={{
-                              textAlign: "center",
-                              fontSize: 16,
-                              fontWeight: 900,
-                              color: isOn ? "#86efac" : "rgba(255,255,255,0.82)",
-                            }}
-                          >
-                            {value}
-                          </div>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div
-          style={{
-            display: "grid",
-            gap: 20,
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-          }}
-        >
-          <div style={{ ...panelStyle, padding: 20 }}>
+          <div
+            style={{
+              ...panelStyle,
+              padding: 18,
+            }}
+          >
             <div
               style={{
                 fontSize: 12,
@@ -442,12 +270,12 @@ export default function DmxDipCalculatorPage() {
                 marginBottom: 10,
               }}
             >
-              Switches ON
+              Switches On
             </div>
 
             <div
               style={{
-                fontSize: 34,
+                fontSize: "clamp(28px, 6vw, 36px)",
                 fontWeight: 900,
                 letterSpacing: -0.6,
               }}
@@ -456,7 +284,12 @@ export default function DmxDipCalculatorPage() {
             </div>
           </div>
 
-          <div style={{ ...panelStyle, padding: 20 }}>
+          <div
+            style={{
+              ...panelStyle,
+              padding: 18,
+            }}
+          >
             <div
               style={{
                 fontSize: 12,
@@ -464,24 +297,203 @@ export default function DmxDipCalculatorPage() {
                 textTransform: "uppercase",
                 letterSpacing: 0.8,
                 color: "rgba(255,255,255,0.68)",
-                marginBottom: 10,
+                marginBottom: 12,
               }}
             >
-              Calculated Address
+              DIP Switch Bank
             </div>
 
             <div
               style={{
-                fontSize: 34,
-                fontWeight: 900,
-                letterSpacing: -0.6,
+                display: "flex",
+                justifyContent: "flex-start",
+                marginBottom: 12,
               }}
             >
-              {reverseAddress}
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "8px 14px",
+                  borderRadius: 999,
+                  background: "#22c55e",
+                  color: "#04130a",
+                  fontWeight: 900,
+                  fontSize: 14,
+                }}
+              >
+                <span>←</span>
+                <span>ON</span>
+              </div>
+            </div>
+
+            <div style={{ overflowX: "auto", paddingBottom: 4 }}>
+              <div
+                style={{
+                  width: "100%",
+                  minWidth: 0,
+                  display: "grid",
+                  gridTemplateColumns: "repeat(9, minmax(0, 1fr))",
+                  gap: 8,
+                }}
+              >
+                {SWITCH_VALUES.map((value, index) => {
+                  const isOn = dipStates[index];
+
+                  return (
+                    <button
+                      key={value}
+                      onClick={() => toggleSwitch(index)}
+                      style={{
+                        background: "transparent",
+                        border: "none",
+                        cursor: "pointer",
+                        padding: 0,
+                        minWidth: 0,
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "grid",
+                          gap: 8,
+                          alignItems: "center",
+                        }}
+                      >
+                        <div
+                          style={{
+                            height: "clamp(108px, 22vw, 154px)",
+                            background: "#050505",
+                            borderRadius: 12,
+                            position: "relative",
+                            border: "1px solid rgba(255,255,255,0.08)",
+                            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.03)",
+                          }}
+                        >
+                          <div
+                            style={{
+                              position: "absolute",
+                              inset: 8,
+                              borderRadius: 10,
+                              background: "#101010",
+                              border: "1px solid rgba(255,255,255,0.06)",
+                            }}
+                          />
+
+                          <div
+                            style={{
+                              position: "absolute",
+                              top: 10,
+                              left: 0,
+                              right: 0,
+                              textAlign: "center",
+                              fontSize: 10,
+                              fontWeight: 800,
+                              letterSpacing: 0.5,
+                              color: isOn ? "#86efac" : "rgba(255,255,255,0.22)",
+                            }}
+                          >
+                            ON
+                          </div>
+
+                          <div
+                            style={{
+                              position: "absolute",
+                              top: isOn ? "12%" : "58%",
+                              left: "50%",
+                              transform: "translateX(-50%)",
+                              width: "70%",
+                              height: "30%",
+                              borderRadius: 8,
+                              background: "#f3f4f6",
+                              border: "1px solid #d1d5db",
+                              boxShadow:
+                                "0 8px 16px rgba(0,0,0,0.28), inset 0 -2px 5px rgba(0,0,0,0.14)",
+                              transition: "top 0.15s ease",
+                            }}
+                          />
+
+                          <div
+                            style={{
+                              position: "absolute",
+                              bottom: 10,
+                              left: 0,
+                              right: 0,
+                              textAlign: "center",
+                              fontSize: 10,
+                              fontWeight: 800,
+                              letterSpacing: 0.5,
+                              color: !isOn ? "#ffffff" : "rgba(255,255,255,0.22)",
+                            }}
+                          >
+                            OFF
+                          </div>
+                        </div>
+
+                        <div
+                          style={{
+                            textAlign: "center",
+                            fontSize: "clamp(12px, 3.2vw, 16px)",
+                            fontWeight: 900,
+                            color: isOn ? "#86efac" : "rgba(255,255,255,0.82)",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {showLocateScreen && (
+        <div
+          onClick={closeLocateScreen}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Escape" || e.key === "Enter" || e.key === " ") {
+              closeLocateScreen();
+            }
+          }}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "#ffffff",
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+          }}
+        >
+          <div
+            style={{
+              color: "#111111",
+              fontSize: "clamp(18px, 4vw, 28px)",
+              fontWeight: 800,
+              textAlign: "center",
+              padding: 24,
+            }}
+          >
+            Locate Screen Active
+            <div
+              style={{
+                marginTop: 10,
+                fontSize: "clamp(14px, 3vw, 18px)",
+                fontWeight: 600,
+                opacity: 0.72,
+              }}
+            >
+              Tap anywhere to exit
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
