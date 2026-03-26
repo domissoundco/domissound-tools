@@ -11,6 +11,31 @@ export default function Home() {
     display: "block",
   };
 
+  const livePillStyle: React.CSSProperties = {
+    display: "inline-block",
+    marginBottom: 14,
+    padding: "6px 10px",
+    borderRadius: 999,
+    background: "#22c55e",
+    color: "#04130a",
+    fontSize: 12,
+    fontWeight: 700,
+    textTransform: "uppercase",
+    letterSpacing: 0.6,
+  };
+
+  const comingSoonPillStyle: React.CSSProperties = {
+    display: "inline-block",
+    marginBottom: 14,
+    padding: "6px 10px",
+    borderRadius: 999,
+    background: "rgba(255,255,255,0.08)",
+    fontSize: 12,
+    fontWeight: 700,
+    textTransform: "uppercase",
+    letterSpacing: 0.6,
+  };
+
   return (
     <div
       style={{
@@ -48,7 +73,7 @@ export default function Home() {
                 boxShadow: "0 0 12px rgba(34,197,94,0.8)",
               }}
             />
-            DOMISSOUNDCO Tools
+            TOOLS.DOMISSOUND.CO
           </div>
 
           <div>
@@ -89,22 +114,7 @@ export default function Home() {
           }}
         >
           <a href="/tools/pal-label-creator" style={cardStyle}>
-            <div
-              style={{
-                display: "inline-block",
-                marginBottom: 14,
-                padding: "6px 10px",
-                borderRadius: 999,
-                background: "#22c55e",
-                color: "#04130a",
-                fontSize: 12,
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: 0.6,
-              }}
-            >
-              Live now
-            </div>
+            <div style={livePillStyle}>Live now</div>
 
             <h2 style={{ margin: "0 0 10px 0", fontSize: 28 }}>
               PAL Label Creator
@@ -125,25 +135,10 @@ export default function Home() {
           </a>
 
           <a href="/tools/dmx-dip-calculator" style={cardStyle}>
-            <div
-              style={{
-                display: "inline-block",
-                marginBottom: 14,
-                padding: "6px 10px",
-                borderRadius: 999,
-                background: "#22c55e",
-                color: "#04130a",
-                fontSize: 12,
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: 0.6,
-              }}
-            >
-              Live now
-            </div>
+            <div style={livePillStyle}>Live now</div>
 
             <h2 style={{ margin: "0 0 10px 0", fontSize: 28 }}>
-              DMX DIP Calculator
+              DMX DIP Calc
             </h2>
 
             <p
@@ -153,8 +148,29 @@ export default function Home() {
                 lineHeight: 1.6,
               }}
             >
-              Calculate DMX DIP switch settings forwards or backwards with a
-              clean on-site friendly switch bank.
+              Quick DIP switch addressing tool for on-site use, with reverse
+              calculation and a locate screen mode for dark environments.
+            </p>
+
+            <div style={{ fontWeight: 700, color: "#93c5fd" }}>Open tool →</div>
+          </a>
+
+          <a href="/tools/fixture-offset" style={cardStyle}>
+            <div style={livePillStyle}>Live now</div>
+
+            <h2 style={{ margin: "0 0 10px 0", fontSize: 28 }}>
+              Fixture Offset
+            </h2>
+
+            <p
+              style={{
+                margin: "0 0 18px 0",
+                color: "rgba(255,255,255,0.72)",
+                lineHeight: 1.6,
+              }}
+            >
+              Start from any address, set a channel footprint, choose quantity,
+              and generate the next fixture addresses instantly.
             </p>
 
             <div style={{ fontWeight: 700, color: "#93c5fd" }}>Open tool →</div>
@@ -166,21 +182,25 @@ export default function Home() {
               opacity: 0.75,
             }}
           >
-            <div
-              style={{
-                display: "inline-block",
-                marginBottom: 14,
-                padding: "6px 10px",
-                borderRadius: 999,
-                background: "rgba(255,255,255,0.08)",
-                fontSize: 12,
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: 0.6,
-              }}
-            >
-              Coming soon
-            </div>
+            <div style={comingSoonPillStyle}>Coming soon</div>
+
+            <h2 style={{ margin: "0 0 10px 0", fontSize: 28 }}>
+              Speaker Delay Calculator
+            </h2>
+
+            <p style={{ margin: 0, color: "rgba(255,255,255,0.68)", lineHeight: 1.6 }}>
+              Quick distance, milliseconds, and timing offsets for PA alignment
+              and system work.
+            </p>
+          </div>
+
+          <div
+            style={{
+              ...cardStyle,
+              opacity: 0.75,
+            }}
+          >
+            <div style={comingSoonPillStyle}>Coming soon</div>
 
             <h2 style={{ margin: "0 0 10px 0", fontSize: 28 }}>
               RF Planner
