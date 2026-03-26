@@ -182,7 +182,7 @@ export default function DmxDipCalculatorPage() {
           style={{
             display: "grid",
             gap: 20,
-            gridTemplateColumns: "minmax(0, 360px) minmax(0, 1fr)",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
           }}
         >
           <div style={{ ...panelStyle, padding: 20 }}>
