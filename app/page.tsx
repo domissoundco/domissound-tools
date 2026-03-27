@@ -176,23 +176,27 @@ export default function Home() {
             <div style={{ fontWeight: 700, color: "#93c5fd" }}>Open tool →</div>
           </a>
 
-          <div
-            style={{
-              ...cardStyle,
-              opacity: 0.75,
-            }}
-          >
-            <div style={comingSoonPillStyle}>Coming soon</div>
+          <a href="/tools/speaker-delay-calc" style={cardStyle}>
+  <div style={livePillStyle}>Live now</div>
 
             <h2 style={{ margin: "0 0 10px 0", fontSize: 28 }}>
-              Speaker Delay Calculator
+              Speaker Delay Calc
             </h2>
 
-            <p style={{ margin: 0, color: "rgba(255,255,255,0.68)", lineHeight: 1.6 }}>
-              Quick distance, milliseconds, and timing offsets for PA alignment
-              and system work.
+            <p
+              style={{
+                margin: "0 0 18px 0",
+                color: "rgba(255,255,255,0.72)",
+                lineHeight: 1.6,
+              }}
+            >
+              Fast delay alignment tool for mains, subs, fills, and delay systems using real-world measurement workflow.
             </p>
-          </div>
+
+            <div style={{ fontWeight: 700, color: "#93c5fd" }}>
+              Open tool →
+            </div>
+            </a>
 
           <div
             style={{
