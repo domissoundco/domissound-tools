@@ -198,22 +198,27 @@ export default function Home() {
             </div>
             </a>
 
-          <div
-            style={{
-              ...cardStyle,
-              opacity: 0.75,
-            }}
-          >
-            <div style={comingSoonPillStyle}>Coming soon</div>
+          <a href="/tools/quick-rf-coord" style={cardStyle}>
+            <div style={livePillStyle}>Live now</div>
 
             <h2 style={{ margin: "0 0 10px 0", fontSize: 28 }}>
-              RF Planner
+              Quick RF Coord
             </h2>
 
-            <p style={{ margin: 0, color: "rgba(255,255,255,0.68)", lineHeight: 1.6 }}>
-              Future tools for RF planning, coordination, and workflow support.
+            <p
+              style={{
+                margin: "0 0 18px 0",
+                color: "rgba(255,255,255,0.72)",
+                lineHeight: 1.6,
+              }}
+            >
+              Emergency RF spacing tool for getting wireless systems on air quickly using UK Ch38 shared spectrum.
             </p>
-          </div>
+
+            <div style={{ fontWeight: 700, color: "#93c5fd" }}>
+              Open tool →
+            </div>
+          </a>
         </div>
       </div>
     </div>
