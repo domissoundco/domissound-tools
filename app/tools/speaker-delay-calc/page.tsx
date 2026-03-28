@@ -434,12 +434,9 @@ export function SpeakerDelayCalc() {
           </a>
 
           <div className="min-w-0">
-            <h1 className="text-5xl font-semibold tracking-tight text-zinc-50 sm:text-6xl md:text-7xl">
+            <h1 className="text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl">
               Speaker Delay Calc
             </h1>
-            <p className="mt-3 max-w-2xl text-base leading-7 text-zinc-400 sm:text-lg">
-              Fast field calc for aligning mains, subs, fills, delays and more.
-            </p>
           </div>
         </div>
 
@@ -449,7 +446,7 @@ export function SpeakerDelayCalc() {
           onChange={setMode}
           options={[
             { label: "Align", value: "align" },
-            { label: "Dist → Delay", value: "distanceToDelay" },
+            { label: "Distance → Delay", value: "distanceToDelay" },
             { label: "Delay → Dist", value: "delayToDistance" },
           ]}
         />
